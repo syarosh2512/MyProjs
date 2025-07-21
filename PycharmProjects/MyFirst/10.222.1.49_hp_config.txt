@@ -1,0 +1,79 @@
+
+Running configuration:
+
+; J9781A Configuration Editor; Created on release #YA.16.11.0021
+; Ver #14:41.44.00.04.19.02.13.98.82.34.61.18.28.f3.84.9c.63.ff.37.27:05
+hostname "UA0005ASW39"
+console idle-timeout serial-usb 3600
+no cdp run
+banner motd "\n***************!!! W A R N I N G !!!*****************\n*** YOU ARE ACCESSING A PRIVATE COMPUTER NETWORK  ***\n*** UNAUTHORIZED ACCESS WILL BE PROSECUTED TO THE ***\n*** FULLEST EXTENT OF THE LAW.                    ***\n****** A U T H O R I Z E D A C C E S S O N L Y ******\n\n"
+timesync ntp
+sntp broadcast
+ntp unicast
+ntp server 10.1.67.168
+ntp enable
+no telnet-server
+time daylight-time-rule middle-europe-and-portugal
+time timezone 120
+no web-management
+web-management ssl
+ip default-gateway 10.222.1.254
+ip ssh filetransfer
+ip ssh timeout 60
+snmp-server community "UA0005community" operator unrestricted
+snmp-server host 10.222.1.123 community "UA0005community"
+snmp-server contact "Sergiy Yarosh ; +380 67 3620775" location "UA;Zorya;UA0005;SIL Plant 2;DP29"
+vlan 1
+   name "DEFAULT_VLAN"
+   no untagged 1-50
+   untagged 51-52
+   no ip address
+   exit
+vlan 197
+   name "it-lan-security"
+   untagged 43-48
+   tagged 51-52
+   no ip address
+   exit
+vlan 200
+   name "it-lan-office"
+   untagged 1-42,49-50
+   tagged 51-52
+   no ip address
+   exit
+vlan 203
+   name "it-lan-vdi"
+   tagged 51-52
+   no ip address
+   exit
+vlan 204
+   name "it-lan-printers"
+   tagged 51-52
+   no ip address
+   exit
+vlan 920
+   name "it-dmz-mgt"
+   tagged 51-52
+   ip address 10.222.1.49 255.255.255.0
+   exit
+primary-vlan 920
+spanning-tree
+no spanning-tree 47 auto-edge-port
+no spanning-tree 48 auto-edge-port
+no spanning-tree 51 auto-edge-port
+no spanning-tree 52 auto-edge-port
+spanning-tree bpdu-protection-timeout 300
+no tftp client
+no tftp server
+loop-protect 1-50
+loop-protect disable-timer 300
+no dhcp config-file-update
+no dhcp image-file-update
+no dhcp tr69-acs-url
+device-profile name "default-ap-profile"
+   cos 0
+   exit
+activate software-update disable
+activate provision disable
+password manager
+password operator

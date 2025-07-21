@@ -9,18 +9,8 @@
 # print('Jon\'s book')
 #
 # #math
-from queue import PriorityQueue
-
-# num = [2,3,4,5]
-# num.append (9)
-# num=num*2
-# print(type(num),"list is new",num)
-# num1 = [21,31,41,51]
-# boll = True
-# print(boll, num1+num)
-#
-# world = "circumstances"
-# print(world)
+# Only import what you need
+# from queue import PriorityQueue - removed unused import
 #
 # a = int(input("Enter a number 1:"))
 # b = int(input("Enter a number 2:"))
@@ -142,10 +132,18 @@ from queue import PriorityQueue
 # result = ",".join(hobbies)
 # print(result, type(result))
 
-lis = [5, 2, 7, 4, 9, [4,99,11]]
-print(lis[2])
-print(lis[2:4])
-print(lis[2:])
-print(lis[::-1])
-print(lis[:-3:-1])
+def demonstrate_list_operations():
+    """Demonstrate various list operations with a single function call"""
+    lis = [5, 2, 7, 4, 9, [4, 99, 11]]
+    
+    # Print all results at once with labels for clarity
+    print(f"Element at index 2: {lis[2]}")
+    print(f"Slice from index 2 to 4: {lis[2:4]}")
+    print(f"Slice from index 2 to end: {lis[2:]}")
+    print(f"Reversed list: {lis[::-1]}")
+    print(f"Slice with negative indices: {lis[:-3:-1]}")
+
+
+if __name__ == "__main__":
+    demonstrate_list_operations()
 

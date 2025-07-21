@@ -1,0 +1,6 @@
+Name is: Sergiy
+Hobby : photo 
+Name is: Jarod
+Hobby : drive 
+Name is: Микола
+Hobby : пиво 
