@@ -1,0 +1,21 @@
+=== Network Shares ===
+
+Share name   Resource                        Remark
+
+-------------------------------------------------------------------------------
+C$           C:\                             Default share                     
+D$           D:\                             Default share                     
+IPC$                                         Remote IPC                        
+print$       C:\WINDOWS\system32\spool\drivers
+                                             Printer Drivers                   
+ADMIN$       C:\WINDOWS                      Remote Admin                      
+The command completed successfully.
+
+
+=== Connected Users/Sessions ===
+
+=== Open Files ===
+
+=== Current User Sessions ===
+ USERNAME              SESSIONNAME        ID  STATE   IDLE TIME  LOGON TIME
+>s0071501              console             1  Active      none   2/17/2026 1:45 PM

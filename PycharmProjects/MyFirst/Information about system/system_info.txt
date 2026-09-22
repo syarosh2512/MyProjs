@@ -1,0 +1,79 @@
+OS: Windows 11
+Version: 10.0.26100
+Machine: AMD64
+Processor: Intel64 Family 6 Model 186 Stepping 3, GenuineIntel
+Computer Name: CUALTW02845
+
+=== Network Configuration ===
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : CUALTW02845
+   Primary Dns Suffix  . . . . . . . : v01.corp
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : v01.corp
+                                       inpkg.net
+
+Ethernet adapter Ethernet 2:
+
+   Connection-specific DNS Suffix  . : dhcp.inpkg.net
+   Description . . . . . . . . . . . : Realtek USB GbE Family Controller #2
+   Physical Address. . . . . . . . . : 28-00-AF-A9-C4-9F
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::e5f1:7dde:ffa2:1c83%12(Preferred) 
+   IPv4 Address. . . . . . . . . . . : 10.221.131.151(Preferred) 
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Tuesday, March 3, 2026 3:50:46 PM
+   Lease Expires . . . . . . . . . . : Sunday, March 8, 2026 4:05:56 PM
+   Default Gateway . . . . . . . . . : 10.221.131.254
+   DHCP Server . . . . . . . . . . . : 10.1.9.163
+   DHCPv6 IAID . . . . . . . . . . . : 170393775
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2F-A3-88-43-28-00-AF-A9-C4-9F
+   DNS Servers . . . . . . . . . . . : 10.154.17.172
+                                       10.154.18.142
+                                       10.154.17.133
+                                       10.154.17.207
+                                       10.154.17.186
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+   Connection-specific DNS Suffix Search List :
+                                       v01.corp
+                                       dhcp.inpkg.net
+
+Wireless LAN adapter Local Area Connection* 1:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter #3
+   Physical Address. . . . . . . . . : C8-8A-9A-8F-98-24
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Wireless LAN adapter Local Area Connection* 10:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter #4
+   Physical Address. . . . . . . . . : CA-8A-9A-8F-98-23
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+
+Wireless LAN adapter Wi-Fi:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : dhcp.inpkg.net
+   Description . . . . . . . . . . . : Intel(R) Wi-Fi 6E AX211 160MHz
+   Physical Address. . . . . . . . . : C8-8A-9A-8F-98-23
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Ethernet adapter Џ?¤Є«озҐ­­п зҐаҐ§ ¬ҐаҐ¦г Bluetooth:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Bluetooth Device (Personal Area Network)
+   Physical Address. . . . . . . . . : C8-8A-9A-8F-98-27
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes

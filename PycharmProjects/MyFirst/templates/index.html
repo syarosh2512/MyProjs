@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Script Runner</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d0d14;--sb:#13131f;--panel:#0f0f1a;--accent:#1a237e;
+  --red:#e53935;--green:#00e676;--blue:#448aff;--purple:#7c4dff;
+  --text:#dde1ff;--dim:#4a4a6a;--border:#1e1e32;
+  --mono:'Cascadia Code','Fira Code','Consolas',monospace;
+  --ui:'Segoe UI',system-ui,sans-serif;
+}
+body{font-family:var(--ui);background:var(--bg);color:var(--text);
+     height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── Header ── */
+header{background:linear-gradient(90deg,#0d1b5e,#1a0a4a);
+       padding:10px 18px;display:flex;align-items:center;gap:10px;
+       border-bottom:1px solid var(--blue);flex-shrink:0}
+header h1{font-size:16px;font-weight:700;color:#fff;letter-spacing:.5px}
+.badge{background:var(--blue);color:#fff;padding:2px 9px;
+       border-radius:12px;font-size:11px;font-weight:600}
+.py-icon{font-size:20px}
+
+/* ── Layout ── */
+.layout{display:flex;flex:1;overflow:hidden}
+
+/* ── Sidebar ── */
+aside{width:270px;background:var(--sb);border-right:1px solid var(--border);
+      display:flex;flex-direction:column;flex-shrink:0}
+.search-box{padding:10px;border-bottom:1px solid var(--border)}
+.search-box input{width:100%;background:var(--bg);border:1px solid var(--border);
+  border-radius:6px;padding:6px 10px;color:var(--text);font-size:12px;outline:none}
+.search-box input:focus{border-color:var(--blue)}
+.search-box input::placeholder{color:var(--dim)}
+.sb-list{flex:1;overflow-y:auto;padding:4px 0}
+.sb-list::-webkit-scrollbar{width:3px}
+.sb-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.group{margin-bottom:1px}
+.grp-hdr{display:flex;align-items:center;gap:6px;padding:6px 10px;
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;
+  color:var(--dim);cursor:pointer;user-select:none}
+.grp-hdr:hover{color:var(--text)}
+.grp-hdr .arr{font-size:8px;transition:transform .15s}
+.grp-hdr.closed .arr{transform:rotate(-90deg)}
+.grp-items.hidden{display:none}
+
+.si{display:flex;align-items:center;gap:7px;padding:6px 10px 6px 22px;
+    font-size:12px;cursor:pointer;transition:background .1s;
+    border-left:2px solid transparent;white-space:nowrap;overflow:hidden}
+.si:hover{background:#1a1a2e}
+.si.active{background:#1a2060;border-left-color:var(--blue);color:#fff}
+.si .dot{font-size:8px;color:var(--dim);flex-shrink:0}
+.si.running .dot{color:var(--green);animation:blink 1s infinite}
+.si .lbl{overflow:hidden;text-overflow:ellipsis}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* ── Main panel ── */
+main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    flex:1;color:var(--dim);text-align:center;gap:10px}
+.ph .big{font-size:52px;opacity:.2}
+.ph p{font-size:13px}
+
+.sp{display:none;flex:1;flex-direction:column;overflow:hidden}
+.sp.show{display:flex}
+
+.sp-head{padding:12px 18px;border-bottom:1px solid var(--border);
+         background:var(--panel);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.sp-info{flex:1;min-width:0}
+.sp-info h2{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-info .pth{font-size:10px;color:var(--dim);font-family:var(--mono);margin-top:2px;
+              white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.btn{padding:6px 14px;border:none;border-radius:5px;font-size:12px;font-weight:600;
+     cursor:pointer;font-family:var(--ui);transition:opacity .15s,transform .1s;white-space:nowrap}
+.btn:hover{opacity:.82}
+.btn:active{transform:scale(.96)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.b-run{background:var(--green);color:#000}
+.b-kill{background:var(--red);color:#fff}
+.b-clr{background:#37474f;color:#fff}
+.b-sin{background:var(--purple);color:#fff;font-size:11px;padding:5px 11px}
+
+.stdin-wrap{background:var(--panel);border-bottom:1px solid var(--border);
+            padding:8px 18px;display:none}
+.stdin-wrap.show{display:block}
+.stdin-wrap label{font-size:10px;color:var(--dim);text-transform:uppercase;
+                  letter-spacing:.5px;display:block;margin-bottom:5px}
+.stdin-wrap textarea{width:100%;background:var(--bg);border:1px solid var(--border);
+  border-radius:5px;color:var(--text);font-family:var(--mono);font-size:12px;
+  padding:7px;resize:vertical;min-height:55px;max-height:130px;outline:none}
+.stdin-wrap textarea:focus{border-color:var(--purple)}
+
+.term{flex:1;background:#070710;overflow-y:auto;padding:12px 18px;
+      font-family:var(--mono);font-size:12.5px;line-height:1.65}
+.term::-webkit-scrollbar{width:5px}
+.term::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.line{white-space:pre-wrap;word-break:break-word}
+.lo{color:#c8d0ff}
+.le{color:#ff6b6b}
+.ls{color:var(--dim);font-style:italic}
+.ld{color:var(--green)}
+
+.sbar{padding:3px 18px;font-size:10px;color:var(--dim);
+      background:var(--sb);border-top:1px solid var(--border);flex-shrink:0}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="py-icon">🐍</span>
+  <h1>Python Script Runner</h1>
+  <span class="badge" id="cnt">0 scripts</span>
+</header>
+
+<div class="layout">
+  <aside>
+    <div class="search-box">
+      <input id="srch" type="text" placeholder="Search scripts…" autocomplete="off">
+    </div>
+    <div class="sb-list" id="sbList">
+      {% for group, items in groups.items() %}
+      <div class="group">
+        <div class="grp-hdr" data-grp="{{ loop.index }}">
+          <span class="arr">▼</span>
+          <span>{{ group }}</span>
+          <span style="margin-left:auto;font-size:9px">{{ items|length }}</span>
+        </div>
+        <div class="grp-items" id="gi{{ loop.index }}">
+          {% for s in items %}
+          <div class="si" data-idx="{{ loop.index0 + (namespace_offset | default(0)) }}"
+               data-path="{{ s.path }}" data-name="{{ s.name }}">
+            <span class="dot">●</span>
+            <span class="lbl" title="{{ s.path }}">{{ s.name }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </aside>
+
+  <main>
+    <div class="ph" id="ph">
+      <div class="big">🐍</div>
+      <p>Select a script from the sidebar to run it</p>
+    </div>
+
+    <div class="sp" id="sp">
+      <div class="sp-head">
+        <div class="sp-info">
+          <h2 id="spName"></h2>
+          <div class="pth" id="spPath"></div>
+        </div>
+        <button class="btn b-sin" onclick="toggleStdin()">⌨ stdin</button>
+        <button class="btn b-run" id="bRun" onclick="doRun()">▶ Run</button>
+        <button class="btn b-kill" id="bKill" onclick="doKill()" disabled>■ Kill</button>
+        <button class="btn b-clr" onclick="clrOut()">✕ Clear</button>
+      </div>
+
+      <div class="stdin-wrap" id="stdinWrap">
+        <label>Standard Input — each line answers one <code>input()</code> call</label>
+        <textarea id="stdinTa" placeholder="e.g. Ukraine&#10;(type input values, one per line)"></textarea>
+      </div>
+
+      <div class="term" id="term"></div>
+    </div>
+  </main>
+</div>
+
+<div class="sbar" id="sbar">Ready — select a script</div>
+
+<script>
+// Flat script list injected from Flask
+const SCRIPTS = {{ scripts | tojson }};
+
+let curPath = null;
+const running = new Set();
+
+// ── sidebar: group toggle ──
+document.querySelectorAll('.grp-hdr').forEach(h => {
+  h.addEventListener('click', () => {
+    h.classList.toggle('closed');
+    document.getElementById('gi' + h.dataset.grp).classList.toggle('hidden');
+  });
+});
+
+// ── sidebar: item click (event delegation) ──
+document.getElementById('sbList').addEventListener('click', e => {
+  const si = e.target.closest('.si');
+  if (!si) return;
+  const path = si.dataset.path;
+  const name = si.dataset.name;
+  selectScript(path, name);
+});
+
+function selectScript(path, name) {
+  curPath = path;
+  document.querySelectorAll('.si').forEach(el => el.classList.remove('active'));
+  const el = document.querySelector(`.si[data-path="${CSS.escape(path)}"]`);
+  if (el) el.classList.add('active');
+
+  document.getElementById('spName').textContent = name;
+  document.getElementById('spPath').textContent = path;
+  document.getElementById('ph').style.display = 'none';
+  document.getElementById('sp').classList.add('show');
+
+  document.getElementById('bRun').disabled = running.has(path);
+  document.getElementById('bKill').disabled = !running.has(path);
+  setStatus('Selected: ' + path);
+}
+
+// ── stdin toggle ──
+function toggleStdin() {
+  document.getElementById('stdinWrap').classList.toggle('show');
+}
+
+// ── output ──
+function addLine(text, cls) {
+  const t = document.getElementById('term');
+  // handle multi-line text chunks
+  text.split('\n').forEach((l, i, arr) => {
+    if (i === arr.length - 1 && l === '') return; // skip trailing empty from split
+    const d = document.createElement('div');
+    d.className = 'line ' + cls;
+    d.textContent = l;
+    t.appendChild(d);
+  });
+  t.scrollTop = t.scrollHeight;
+}
+
+function clrOut() {
+  document.getElementById('term').innerHTML = '';
+}
+
+function setStatus(msg) {
+  document.getElementById('sbar').textContent = msg;
+}
+
+// ── run ──
+function doRun() {
+  if (!curPath) return;
+  const path = curPath;
+  const stdin = document.getElementById('stdinTa').value;
+
+  running.add(path);
+  syncButtons(path);
+  syncSidebarDot(path, true);
+
+  addLine('▶  ' + path, 'ls');
+  if (stdin.trim()) addLine('   stdin: ' + stdin.trim().replace(/\n/g, ', '), 'ls');
+  addLine('', 'ls');
+
+  fetch('/api/run', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({path, stdin})
+  }).then(res => {
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+
+    function pump() {
+      reader.read().then(({done, value}) => {
+        if (done) { finish(path); return; }
+        buf += dec.decode(value, {stream: true});
+        const parts = buf.split('\n');
+        buf = parts.pop();
+        for (const p of parts) {
+          if (!p.startsWith('data: ')) continue;
+          try {
+            const msg = JSON.parse(p.slice(6));
+            if (msg.t === 'out') {
+              const txt = msg.text.replace(/\r?\n$/, '');
+              if (txt !== '') addLine(txt, 'lo');
+            } else if (msg.t === 'err') {
+              addLine(msg.text, 'le');
+            } else if (msg.t === 'done') {
+              addLine('', 'ls');
+              const ok = msg.code === 0;
+              addLine((ok ? '✓ ' : '✗ ') + 'Exited with code ' + msg.code, ok ? 'ld' : 'le');
+              setStatus('Done: ' + path + ' (code ' + msg.code + ')');
+              finish(path);
+            }
+          } catch {}
+        }
+        pump();
+      }).catch(() => finish(path));
+    }
+    pump();
+    setStatus('Running: ' + path + '…');
+  }).catch(err => {
+    addLine('Request error: ' + err.message, 'le');
+    finish(path);
+  });
+}
+
+function finish(path) {
+  running.delete(path);
+  syncButtons(path);
+  syncSidebarDot(path, false);
+}
+
+function syncButtons(path) {
+  if (path !== curPath) return;
+  document.getElementById('bRun').disabled = running.has(path);
+  document.getElementById('bKill').disabled = !running.has(path);
+}
+
+function syncSidebarDot(path, on) {
+  const el = document.querySelector(`.si[data-path="${CSS.escape(path)}"]`);
+  if (!el) return;
+  const dot = el.querySelector('.dot');
+  el.classList.toggle('running', on);
+  dot.textContent = on ? '▶' : '●';
+}
+
+// ── kill ──
+function doKill() {
+  if (!curPath) return;
+  fetch('/api/kill', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({path: curPath})
+  }).then(r => r.json()).then(() => {
+    addLine('⚡ Killed by user', 'le');
+    setStatus('Killed');
+  });
+}
+
+// ── search ──
+document.getElementById('srch').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('.group').forEach(grp => {
+    let vis = 0;
+    grp.querySelectorAll('.si').forEach(si => {
+      const match = !q || si.dataset.name.toLowerCase().includes(q)
+                       || si.dataset.path.toLowerCase().includes(q);
+      si.style.display = match ? '' : 'none';
+      if (match) vis++;
+    });
+    grp.style.display = vis ? '' : 'none';
+    if (q && vis) {
+      grp.querySelector('.grp-hdr').classList.remove('closed');
+      grp.querySelector('.grp-items').classList.remove('hidden');
+    }
+  });
+});
+
+// ── init ──
+document.getElementById('cnt').textContent =
+  document.querySelectorAll('.si').length + ' scripts';
+</script>
+</body>
+</html>

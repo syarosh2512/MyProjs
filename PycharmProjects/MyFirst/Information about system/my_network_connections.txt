@@ -1,0 +1,87 @@
+=== My Network Drive Connections ===
+New connections will be remembered.
+
+
+Status       Local     Remote                    Network
+
+-------------------------------------------------------------------------------
+OK           L:        \\cuanas16.ua.inpkg.net\ITARCHIVE 
+                                                Microsoft Windows Network
+OK           M:        \\cuanas10.ua.inpkg.net\itexec 
+                                                Microsoft Windows Network
+OK           R:        \\cuanas11.ua.inpkg.net\TVboards 
+                                                Microsoft Windows Network
+OK           W:        \\10.221.131.59\AE$       Microsoft Windows Network
+The command completed successfully.
+
+
+=== Stored Credentials ===
+
+Currently stored credentials:
+
+    Target: MicrosoftAccount:target=SSO_POP_Device
+    Type: Generic 
+    User: 02uppixfjqlnoill
+    Saved for this logon only
+    
+    Target: MicrosoftAccount:target=SSO_POP_User:user=syarosh@outlook.com
+    Type: Generic 
+    User: syarosh@outlook.com
+    Saved for this logon only
+    
+    Target: LegacyGeneric:target=Microsoft_OneDrive_Cookies_v2_Business1_https://verallia.sharepoint.com/
+    Type: Generic 
+    Local machine persistence
+    
+    Target: LegacyGeneric:target=Microsoft_OneDrive_Cookies_v2_Business1_https://verallia-my.sharepoint.com/
+    Type: Generic 
+    Local machine persistence
+    
+    Target: LegacyGeneric:target=git:https://github.com
+    Type: Generic 
+    User: syarosh2512
+    Local machine persistence
+    
+    Target: LegacyGeneric:target=MicrosoftAccount:user=syarosh@outlook.com
+    Type: Generic 
+    User: syarosh@outlook.com
+    Local machine persistence
+    
+    Target: WindowsLive:target=virtualapp/didlogical
+    Type: Generic 
+    User: 02uppixfjqlnoill
+    Local machine persistence
+    
+    Target: Domain:interactive=v01\wkss0071501
+    Type: Domain Password
+    User: v01\wkss0071501
+    
+    Target: LegacyGeneric:target=teamsIv/teams
+    Type: Generic 
+    User: teams
+    
+    Target: LegacyGeneric:target=teamsKey/teams
+    Type: Generic 
+    User: teams
+    
+    Target: LegacyGeneric:target=TERMSRV/10.221.131.59
+    Type: Generic 
+    User: admin
+    
+
+=== Mapped Network Drives ===
+Caption  FreeSpace      Size           
+
+L:       550842732544   3888539680768  
+
+M:       513652412416   1417615626240  
+
+R:       2893623418880  2913889878016  
+
+W:       290753478656   1427592179712  
+
+
+
+
+=== Current User Context ===
+Running as: v01\s0071501

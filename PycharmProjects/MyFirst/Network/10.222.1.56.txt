@@ -1,0 +1,25 @@
+[24;14Hshow runni[24;14H[?25h[24;24H[24;24Hng-config[24;24H[?25h[24;33H[1;0H[1M[24;1H[1L[24;33H[24;1H[2K[24;1H[?25h[24;1H[1;24r[24;1H
+Running configuration:
+
+; hpStack_WC Configuration Editor; Created on release #WC.16.11.0021
+; Ver #14:67.6f.f8.1d.9b.3f.bf.bb.ef.7c.59.fc.6b.fb.9f.fc.ff.ff.37.ef:44
+hostname "UA0005ASW46"
+vsf
+   enable domain 10
+   member 1
+      type "JL254A" mac-address 8c85c1-d23900
+      priority 128
+      link 1 1/51-1/52
+      link 1 name "I-Link1_1"
+      link 2 name "I-Link1_2"
+      exit
+   member 2
+      type "JL254A" mac-address 8c85c1-d2ce00
+      priority 128
+      link 1 2/51-2/52
+      link 1 name "I-Link2_1"
+      link 2 name "I-Link2_2"
+      exit
+   port-speed 10g
+[24;1H[2K-- MORE --, next page: Space, next line: Enter, quit: Control-C[24;1H[24;1H[2K[24;1H[1;24r[24;1H   exit
+[24;1H[2K-- MORE --, next page: Space, next line: Enter, quit: Control-C[24;1H

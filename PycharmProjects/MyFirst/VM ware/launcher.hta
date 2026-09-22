@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>VMware Servers</title>
+    <HTA:APPLICATION
+        APPLICATIONNAME="VMware Servers"
+        BORDER="dialog"
+        BORDERSTYLE="normal"
+        INNERBORDER="no"
+        SCROLL="no"
+        SINGLEINSTANCE="yes"
+        WINDOWSTATE="normal"
+    />
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #a78bfa;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .card-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .card {
+            background: #16213e;
+            border: 1px solid #2d2d5e;
+            border-radius: 10px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: border-color 0.2s;
+        }
+
+        .card:hover { border-color: #7c3aed; }
+
+        .card-info { display: flex; flex-direction: column; gap: 4px; }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #c4b5fd;
+        }
+
+        .card-url {
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .btn {
+            background: #7c3aed;
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            padding: 9px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover { background: #6d28d9; }
+        .btn:active { background: #5b21b6; }
+
+        #status {
+            margin-top: 22px;
+            font-size: 12px;
+            color: #10b981;
+            min-height: 18px;
+        }
+
+        .close-bar {
+            margin-top: 24px;
+        }
+
+        .btn-close {
+            background: #374151;
+            color: #9ca3af;
+            border: none;
+            border-radius: 7px;
+            padding: 7px 18px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-close:hover { background: #4b5563; color: #e5e7eb; }
+    </style>
+    <script language="JScript">
+        var SCRIPT_DIR = (function() {
+            var path = window.location.pathname.replace(/\//g, "\\");
+            if (path.charAt(0) === "\\") path = path.substring(1);
+            return path.substring(0, path.lastIndexOf("\\"));
+        })();
+
+        function runScript(filename) {
+            try {
+                var shell = new ActiveXObject("WScript.Shell");
+                var cmd = 'python "' + SCRIPT_DIR + '\\' + filename + '"';
+                shell.Run(cmd, 1, false);
+                document.getElementById("status").innerText = "Launched: " + filename;
+            } catch(e) {
+                document.getElementById("status").style.color = "#ef4444";
+                document.getElementById("status").innerText = "Error: " + e.message;
+            }
+        }
+
+        function closeApp() { window.close(); }
+    </script>
+</head>
+<body>
+    <h1>VM ware Launcher</h1>
+    <div class="subtitle">vSphere auto-login scripts</div>
+
+    <div class="card-grid">
+
+        <div class="card">
+            <div class="card-info">
+                <div class="card-title">cuasvvc0001</div>
+                <div class="card-url">cuasvvc0001.ua.inpkg.net</div>
+            </div>
+            <button class="btn" onclick="runScript('cuasvvc0001 autologin.py')">Launch</button>
+        </div>
+
+        <div class="card">
+            <div class="card-info">
+                <div class="card-title">cuasvvc0002</div>
+                <div class="card-url">cuasvvc0002.ua.inpkg.net</div>
+            </div>
+            <button class="btn" onclick="runScript('cuasvvc0002 autologin.py')">Launch</button>
+        </div>
+
+        <div class="card">
+            <div class="card-info">
+                <div class="card-title">DLT 2000</div>
+                <div class="card-url">10.222.1.220</div>
+            </div>
+            <button class="btn" onclick="runScript('DLT 2000 Access.py')">Launch</button>
+        </div>
+
+        <div class="card">
+            <div class="card-info">
+                <div class="card-title">HP IMC</div>
+                <div class="card-url">10.222.1.123:8080</div>
+            </div>
+            <button class="btn" onclick="runScript('HP IMC Access.py')">Launch</button>
+        </div>
+
+    </div>
+
+    <div id="status"></div>
+
+    <div class="close-bar">
+        <button class="btn-close" onclick="closeApp()">Close</button>
+    </div>
+</body>
+</html>
